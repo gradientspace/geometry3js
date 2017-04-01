@@ -19,7 +19,7 @@ export interface Polygon2d
     SignedArea() : number;
     IsClockwise() : boolean;
     Perimeter() : number;
-    Contains(vTest : IVector2d) : boolean;
+    ContainsPoint(vTest : IVector2d) : boolean;
 }
 
 
@@ -106,7 +106,7 @@ export class DefaultPolygon2d implements Polygon2d
     }
 
 
-    Contains(vTest : IVector2d) : boolean
+    ContainsPoint(vTest : IVector2d) : boolean
     {
         let nWindingNumber = 0;   // winding number counter
 

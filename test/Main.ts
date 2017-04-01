@@ -37,13 +37,13 @@ class Startup {
 
 		console.log("count ", poly.VertexCount(), 
 				   " area ", poly.SignedArea(),  " perimeter ", poly.Perimeter(),
-				   " ptIn ", poly.Contains(ptIn), " ptOut ", poly.Contains(ptOut) );
+				   " ptIn ", poly.ContainsPoint(ptIn), " ptOut ", poly.ContainsPoint(ptOut) );
 
 		poly.Reverse();
 
 		console.log("reversed count ", poly.VertexCount(), 
 				   " area ", poly.SignedArea(),  " perimeter ", poly.Perimeter(),
-				   " ptIn ", poly.Contains(ptIn), " ptOut ", poly.Contains(ptOut) );	
+				   " ptIn ", poly.ContainsPoint(ptIn), " ptOut ", poly.ContainsPoint(ptOut) );	
 	}
 
 }
