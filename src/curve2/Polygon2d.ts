@@ -1,7 +1,28 @@
 import {IVector2d, Vector2d} from "../types/Vector2d";
 import * as g3 from "../g3";
 
-export default class Polygon2d
+
+export interface Polygon2d
+{
+    VertexCount() : number;
+    GetVertex(index: number) : Vector2d;
+    SetVertex(index: number, value: Vector2d);
+
+    Start() : Vector2d;
+    End() : Vector2d;
+
+    AppendVertex(v : IVector2d);
+    AppendArray(v: Array<number>);
+
+    Reverse();
+    SignedArea() : number;
+    IsClockwise() : boolean;
+    Perimeter() : number;
+    Contains(vTest : IVector2d) : boolean;
+}
+
+
+export class DefaultPolygon2d implements Polygon2d
 {
     vertices: Vector2d[];
     Timestamp: number;
@@ -12,11 +33,16 @@ export default class Polygon2d
     }
 
     VertexCount() : number {
-        return this.vertices.length / 2;
+        return this.vertices.length;
     }
 
-    Vertex(index: number) : Vector2d {
+    GetVertex(index: number) : Vector2d {
         return this.vertices[index].clone();
+    }
+    SetVertex(index: number, value: Vector2d) {
+        let p = this.vertices[index];
+        p.x = value.x; p.y = value.y;
+        this.Timestamp++;
     }
 
     Start() : Vector2d {
@@ -42,6 +68,7 @@ export default class Polygon2d
 
     Reverse() {
         this.vertices.reverse();
+        this.Timestamp++;
     }
 
 
@@ -67,7 +94,7 @@ export default class Polygon2d
 
     Perimeter() : number {
         let fPerim = 0;
-        let N = this.vertices.length/2;
+        let N = this.vertices.length;
         for (let i = 0; i < N; ++i) {
             let j = (i+1) % N;
             let dx = this.vertices[j].x - this.vertices[i].x;

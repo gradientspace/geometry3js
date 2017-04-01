@@ -28,7 +28,7 @@ class Startup {
 
 
 	static test_Polygon2d() {
-		let poly = g3.Types.Polygon2d();
+		let poly = g3.Polygon2d();
 		poly.AppendVertex(g3.Vector2d(0,0));
 		poly.AppendVertex( {x: 1, y: 0} );
 		poly.AppendArray([1,1, 0,1]);

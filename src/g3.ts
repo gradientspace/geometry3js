@@ -1,18 +1,11 @@
 import {IVector2d, Vector2d, DefaultVector2d, IndexedVector2d, Vector2dConstant} from "./types/Vector2d";
-import Polygon2d from "./curve2/Polygon2d";
+import {Polygon2d, DefaultPolygon2d} from "./curve2/Polygon2d";
 
 export function Vector2d(x: number, y: number) : Vector2d {
     return new DefaultVector2d(x,y);
 }
-
-
-
-export class Types 
-{
-    static Polygon2d(n: number = 0) : Polygon2d {
-        return new Polygon2d(n);
-    }
-
+export function Polygon2d(n: number = 0) : Polygon2d {
+    return new DefaultPolygon2d(n);
 }
 
 
