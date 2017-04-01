@@ -29,7 +29,6 @@ export class MathUtil
 {
 
 
-
     // code adapted from http://softsurfer.com/Archive/algorithm_0103/algorithm_0103.htm
     //    Return: >0 for P2 left of the line through P0 and P1
     //            =0 for P2 on the line

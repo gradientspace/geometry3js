@@ -1,16 +1,25 @@
 
 
+/**
+ * Basic 2d-vector interface. Wherever possible, functions that just
+ * need to access .x and .y should take this interface instead of Vector2d.
+ * Then you can call it with {x: , y: } syntax, as well as any other object
+ * that provides .x and .y (including via a get/set)
+ */
 export interface IVector2d
 {
     x: number;
-    y: number;
-
-    clone();    
+    y: number;   
 }
 
 
+/**
+ * This is the "full" Vector2d, that has all the various functions
+ */
 export interface Vector2d extends IVector2d
 {
+    clone(); 
+
     Length(): number;
     LengthSquared(): number;
 
@@ -77,9 +86,7 @@ export class DefaultVector2d implements Vector2d
         return this;
     }  
 
-
 }
-
 
 
 
@@ -152,6 +159,8 @@ export class IndexedVector2d extends Array<number> implements Vector2d
         return this;
     }    
 }
+
+
 
 
 
