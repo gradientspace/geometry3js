@@ -13,10 +13,15 @@ export interface IVector2d
 }
 
 
+export interface ICopyableVector2d extends IVector2d
+{
+    clone(); 
+}
+
 /**
  * This is the "full" Vector2d, that has all the various functions
  */
-export interface Vector2d extends IVector2d
+export interface Vector2d extends ICopyableVector2d
 {
     // these are the standard Vector2d functions that
     // mirror other geometry3 libraries
@@ -24,8 +29,6 @@ export interface Vector2d extends IVector2d
     LengthSquared(): number;
 
     // these are the weird things we have to do in javascript!
-
-    clone(); 
     at(i: number) : number;
 
     // these *modify* the Vector2d, and end with "return this;"
@@ -192,7 +195,7 @@ export class IndexedVector2d extends Array<number> implements Vector2d
  * javascript really doesn't support this kind of thing very well!
  * We throw exceptions so that hopefully you can find the problems in your code.
  */
-export class Vector2dConstant implements Vector2d
+export class Vector2dConstant implements ICopyableVector2d
 {
     private readonly xx: number;
     private readonly yy: number;
@@ -208,7 +211,7 @@ export class Vector2dConstant implements Vector2d
     }
 
     clone() {
-        return new Vector2dConstant(this.xx, this.yy);
+        return new DefaultVector2d(this.xx, this.yy);
     }
 
     get x() : number {
@@ -223,33 +226,6 @@ export class Vector2dConstant implements Vector2d
     }
     set y(f : number) {
         throw "called y= on constant!";
-    }
-
-    Length() : number {
-        return Math.sqrt(this.xx*this.xx + this.yy*this.yy);
-    }
-    LengthSquared() : number {
-        return this.xx*this.xx + this.yy*this.yy;
-    }
-
-    at(i: number) : number {
-        return (i == 0) ? this.xx : this.yy;
-    }
-
-    set(b: IVector2d) : Vector2d {
-        throw "called set on constant Vector2d!";
-    }
-    addv(b: IVector2d) : Vector2d {
-        throw "called addv on constant Vector2d!";
-    }
-    subv(b: IVector2d) : Vector2d {    
-        throw "called subv on constant Vector2d!";
-    }
-    mulf(f: number) : Vector2d {
-        throw "called mulf on constant Vector2d!";
-    }    
-    divf(f: number) : Vector2d {
-        throw "called divf on constant!";
-    }      
+    }   
 }
 

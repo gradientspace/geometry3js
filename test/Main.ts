@@ -1,7 +1,6 @@
 //import { Vector2dImpl, Vector2d } from "./VectorTypes/Vector2d";
 import * as g3 from "../src/g3";
-
-
+import Constants from "../src/util/Constants";
 
 
 
@@ -14,7 +13,7 @@ class Startup {
 		let vadd = g3.addv2(v1,v2);
 		let n = v1.Length();
 
-		vadd.addv( g3.Constants.Vector2d_Zero );
+		vadd.addv( Constants.Vector2d_AxisX);
 	
 		console.log(vadd.toString());	
 

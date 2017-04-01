@@ -1,4 +1,5 @@
 import {IVector2d, Vector2d} from "../types/Vector2d";
+import MathUtil from "../util/MathUtil"
 import * as g3 from "../g3";
 
 
@@ -116,13 +117,13 @@ export class DefaultPolygon2d implements Polygon2d
             if (this.vertices[i].y <= vTest.y) {         
                 // start y <= P.y
                 if (this.vertices[iNext].y > vTest.y) {                         // an upward crossing
-                    if (g3.MathUtil.IsLeft( this.vertices[i], this.vertices[iNext], vTest) > 0)  // P left of edge
+                    if (MathUtil.IsLeft( this.vertices[i], this.vertices[iNext], vTest) > 0)  // P left of edge
                         ++nWindingNumber;                                      // have a valid up intersect
                 }
             } else {                       
                 // start y > P.y (no test needed)
                 if (this.vertices[iNext].y <= vTest.y) {                        // a downward crossing
-                    if (g3.MathUtil.IsLeft( this.vertices[i], this.vertices[iNext], vTest) < 0)  // P right of edge
+                    if (MathUtil.IsLeft( this.vertices[i], this.vertices[iNext], vTest) < 0)  // P right of edge
                         --nWindingNumber;                                      // have a valid down intersect
                 }
             }
