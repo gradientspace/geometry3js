@@ -14,6 +14,14 @@
             "command": "tsc",
             "args": ["-p", "./src", "-p", "./test"],
             "problemMatcher": "$tsc"
-        }  
+        },
+        {
+            "taskName": "webpack",
+            "suppressTaskName": false,
+            "isBuildCommand": false, 
+            "isShellCommand": true, 
+            "command": "./node_modules/.bin/webpack",
+            "args": []
+        }       
     ]
 }

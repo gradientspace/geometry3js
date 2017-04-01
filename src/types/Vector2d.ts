@@ -18,16 +18,22 @@ export interface IVector2d
  */
 export interface Vector2d extends IVector2d
 {
-    clone(); 
-
+    // these are the standard Vector2d functions that
+    // mirror other geometry3 libraries
     Length(): number;
     LengthSquared(): number;
 
+    // these are the weird things we have to do in javascript!
+
+    clone(); 
+    at(i: number) : number;
+
     // these *modify* the Vector2d, and end with "return this;"
-    addv(b) : Vector2d;
-    subv(b) : Vector2d;
-    mulf(s) : Vector2d;
-    divf(s) : Vector2d;
+    set(b: IVector2d) : Vector2d;
+    addv(b: IVector2d) : Vector2d;
+    subv(b: IVector2d) : Vector2d;
+    mulf(s: number) : Vector2d;
+    divf(s: number) : Vector2d;
 }
 
 
@@ -61,26 +67,35 @@ export class DefaultVector2d implements Vector2d
         return this.x*this.x + this.y*this.y;
     }
 
+    at(i: number) : number {
+        return (i == 0) ? this.x : this.y;
+    }
 
-    addv(b) : Vector2d {
+    set(b: IVector2d) : Vector2d {
+        this.x = b.x;
+        this.y = b.y;
+        return this;
+    }
+
+    addv(b: IVector2d) : Vector2d {
         this.x += b.x;
         this.y += b.y;
         return this;
     }
 
-    subv(b) : Vector2d {
+    subv(b: IVector2d) : Vector2d {
         this.x -= b.x;
         this.y -= b.y;
         return this;
     }    
 
-    mulf(f) : Vector2d {
+    mulf(f: number) : Vector2d {
         this.x *= f;
         this.y *= f;
         return this;
     }
 
-    divf(f) : Vector2d {
+    divf(f: number) : Vector2d {
         this.x /= f;
         this.y /= f;
         return this;
@@ -131,29 +146,35 @@ export class IndexedVector2d extends Array<number> implements Vector2d
         return this[0]*this[0] + this[1]*this[1];
     }
 
-    sumv(b): Vector2d {
-        return new IndexedVector2d(this[0]+b[0], this[1]+b[1]);
+    at(i: number) : number {
+        return this[i];
     }
 
-    addv(b) : Vector2d {
-        this[0] += b[0];
-        this[1] += b[1];
+    set(b: IVector2d) : Vector2d {
+        this[0] = b.x;
+        this[1] = b.y;
         return this;
     }
 
-    subv(b) : Vector2d {
+    addv(b: IVector2d) : Vector2d {
+        this[0] += b.x;
+        this[1] += b.y;
+        return this;
+    }
+
+    subv(b: IVector2d) : Vector2d {
         this[0] -= b[0];
         this[1] -= b[1];
         return this;
     }    
 
-    mulf(f) : Vector2d {
+    mulf(f: number) : Vector2d {
         this[0] *= f;
         this[1] *= f;
         return this;
     }
 
-    divf(f) : Vector2d {
+    divf(f: number) : Vector2d {
         this[0] /= f;
         this[1] /= f;
         return this;
@@ -211,17 +232,23 @@ export class Vector2dConstant implements Vector2d
         return this.xx*this.xx + this.yy*this.yy;
     }
 
+    at(i: number) : number {
+        return (i == 0) ? this.xx : this.yy;
+    }
 
-    addv(b) : Vector2d {
-        throw "called addv on constant!";
+    set(b: IVector2d) : Vector2d {
+        throw "called set on constant Vector2d!";
     }
-    subv(b) : Vector2d {    
-        throw "called subv on constant!";
+    addv(b: IVector2d) : Vector2d {
+        throw "called addv on constant Vector2d!";
     }
-    mulf(f) : Vector2d {
-        throw "called mulf on constant!";
+    subv(b: IVector2d) : Vector2d {    
+        throw "called subv on constant Vector2d!";
+    }
+    mulf(f: number) : Vector2d {
+        throw "called mulf on constant Vector2d!";
     }    
-    divf(f) : Vector2d {
+    divf(f: number) : Vector2d {
         throw "called divf on constant!";
     }      
 }
