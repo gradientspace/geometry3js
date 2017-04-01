@@ -1,13 +1,13 @@
-import {Vector2d} from "../types/Vector2d";
+import {IVector2d, Vector2d} from "../types/Vector2d";
 import * as g3 from "../g3";
 
 export default class Polygon2d
 {
-    vertices: number[];
+    vertices: Vector2d[];
     Timestamp: number;
 
     constructor(count: number = 0) {
-        this.vertices = new Array<number>(count);
+        this.vertices = new Array<Vector2d>(count);
         this.Timestamp = 0;
     }
 
@@ -16,39 +16,32 @@ export default class Polygon2d
     }
 
     Vertex(index: number) : Vector2d {
-        return g3.Vector2d(this.vertices[2*index], this.vertices[2*index+1]);
+        return this.vertices[index].clone();
     }
 
     Start() : Vector2d {
-        return this.Vertex(0);
+        return this.vertices[0].clone();
     }
     End() : Vector2d {
-        return this.Vertex(this.vertices.length/2 - 1);
+        return this.vertices[this.vertices.length - 1].clone();
     }
 
-    AppendVertex(v) {
-        this.vertices.push(v[0]);
-        this.vertices.push(v[1]);
-    }
+    AppendVertex(v : IVector2d) {
+        this.vertices.push( g3.Vector2d(v.x, v.y) );
+    }  
 
-    Append(v: Array<number>) {
+    AppendArray(v: Array<number>) {
         if ( v.length % 2 != 0) {
             throw "Polygon2d.Append: array size is not even";
         }
-        this.vertices.push(...v);
+        let N = v.length / 2;
+        for (let i = 0; i < N; ++i ) {
+            this.vertices.push( g3.Vector2d(v[2*i], v[2*i+1] ) );
+        }
     }
 
     Reverse() {
-        let n = this.vertices.length / 2;
-        for ( let i = 0; i < n/2; ++i ) {
-            let j = n-1-i;
-            let tmpx = this.vertices[2*i];
-            let tmpy = this.vertices[2*i+1];
-            this.vertices[2*i] = this.vertices[2*j];
-            this.vertices[2*i+1] = this.vertices[2*j+1];
-            this.vertices[2*j] = tmpx;
-            this.vertices[2*j+1] = tmpy;
-        }
+        this.vertices.reverse();
     }
 
 
@@ -58,12 +51,12 @@ export default class Polygon2d
 
     SignedArea() : number {
         let fArea = 0;
-        let N = this.vertices.length/2;
+        let N = this.vertices.length;
         for (let i = 0; i < N; ++i) {
             let j = (i+1) % N;
-            let v1x = this.vertices[2*i], v1y = this.vertices[2*i+1];
-            let v2x = this.vertices[2*j], v2y = this.vertices[2*j+1];
-            fArea += v1x * v2y - v1y * v2x;
+            let v1 = this.vertices[i];
+            let v2 = this.vertices[j];
+            fArea += v1.x * v2.y - v1.y * v2.x;
         }
         return fArea / 2;	        
     }
@@ -77,32 +70,32 @@ export default class Polygon2d
         let N = this.vertices.length/2;
         for (let i = 0; i < N; ++i) {
             let j = (i+1) % N;
-            let dx = this.vertices[2*j] - this.vertices[2*i];
-            let dy = this.vertices[2*j+1] - this.vertices[2*i+1];
+            let dx = this.vertices[j].x - this.vertices[i].x;
+            let dy = this.vertices[j].y - this.vertices[i].y;
             fPerim += Math.sqrt(dx*dx + dy*dy);            
         }
         return fPerim;        
     }
 
 
-    Contains(vTest) : boolean
+    Contains(vTest : IVector2d) : boolean
     {
         let nWindingNumber = 0;   // winding number counter
 
-        let N = this.VertexCount();
+        let N = this.vertices.length;
         for (let i = 0; i < N; ++i) {
             let iNext = (i+1) % N;
 
-            if (this.vertices[2*i+1] <= vTest[1]) {         
+            if (this.vertices[i].y <= vTest.y) {         
                 // start y <= P.y
-                if (this.vertices[2*iNext+1] > vTest[1]) {                         // an upward crossing
-                    if (g3.MathUtil.IsLeft( this.Vertex(i), this.Vertex(iNext), vTest) > 0)  // P left of edge
+                if (this.vertices[iNext].y > vTest.y) {                         // an upward crossing
+                    if (g3.MathUtil.IsLeft( this.vertices[i], this.vertices[iNext], vTest) > 0)  // P left of edge
                         ++nWindingNumber;                                      // have a valid up intersect
                 }
             } else {                       
                 // start y > P.y (no test needed)
-                if (this.vertices[2*iNext+1] <= vTest[1]) {                        // a downward crossing
-                    if (g3.MathUtil.IsLeft( this.Vertex(i), this.Vertex(iNext), vTest) < 0)  // P right of edge
+                if (this.vertices[iNext].y <= vTest.y) {                        // a downward crossing
+                    if (g3.MathUtil.IsLeft( this.vertices[i], this.vertices[iNext], vTest) < 0)  // P right of edge
                         --nWindingNumber;                                      // have a valid down intersect
                 }
             }

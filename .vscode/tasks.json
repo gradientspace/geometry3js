@@ -1,0 +1,19 @@
+{
+    "version": "0.1.0",
+
+    "showOutput": "never",      
+    "echoCommand": true,    
+
+    // to compile multiple subdirectories, add "-p", "./<dirname>" lines
+    "tasks": [
+        {
+            "taskName": "Build g3",
+            "suppressTaskName": false,
+            "isBuildCommand": true, 
+            "isShellCommand": true, 
+            "command": "tsc",
+            "args": ["-p", "./src", "-p", "./test"],
+            "problemMatcher": "$tsc"
+        }  
+    ]
+}

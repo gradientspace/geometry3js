@@ -1,18 +1,18 @@
 
 
-export interface Vector2d 
+export interface IVector2d
 {
-    // indexer means that only an array subclass can be a Vector2d...
-    [position: number]: number;
-    
-    // implement these as get/set
     x: number;
     y: number;
 
+    clone();    
+}
+
+
+export interface Vector2d extends IVector2d
+{
     Length(): number;
     LengthSquared(): number;
-
-    clone();
 
     // these *modify* the Vector2d, and end with "return this;"
     addv(b) : Vector2d;
@@ -23,13 +23,84 @@ export interface Vector2d
 
 
 
+/**
+ * "Normal" implementation of Vector2d, has .x and .y properties
+ */
+export class DefaultVector2d implements Vector2d
+{
+    x: number;
+    y: number;
 
-export class Vector2dBase extends Array<number> 
+    // implement methods for Array here
+    public constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    toString() : string {
+        return "[" + this.x + "," + this.y + "]";
+    }
+
+    clone() {
+        return new DefaultVector2d(this.x, this.y);
+    }
+
+    Length() : number {
+        return Math.sqrt(this.x*this.x + this.y*this.y);
+    }
+    LengthSquared() : number {
+        return this.x*this.x + this.y*this.y;
+    }
+
+
+    addv(b) : Vector2d {
+        this.x += b.x;
+        this.y += b.y;
+        return this;
+    }
+
+    subv(b) : Vector2d {
+        this.x -= b.x;
+        this.y -= b.y;
+        return this;
+    }    
+
+    mulf(f) : Vector2d {
+        this.x *= f;
+        this.y *= f;
+        return this;
+    }
+
+    divf(f) : Vector2d {
+        this.x /= f;
+        this.y /= f;
+        return this;
+    }  
+
+
+}
+
+
+
+
+
+/**
+ * This is a Vector2d that provides an indexing interface,
+ * ie v[0], v[1]. It does this by subclassing Array.
+ * setter/getters are used to provide .x and .y.
+ * This is *much* slower than a class with .x and .y properties, unfortunately.
+ * However some algorithms are much easier to code with indices!!
+ */
+export class IndexedVector2d extends Array<number> implements Vector2d
 {
     // implement methods for Array here
     public constructor(x, y) {
         super(2);
         this[0] = x; this[1] = y;
+    }
+
+    clone() {
+        return new IndexedVector2d(this[0],this[1]);
     }
 
     get x() : number {
@@ -46,7 +117,6 @@ export class Vector2dBase extends Array<number>
         this[1] = f;
     }
 
-
     Length() : number {
         return Math.sqrt(this[0]*this[0] + this[1]*this[1]);
     }
@@ -54,19 +124,8 @@ export class Vector2dBase extends Array<number>
         return this[0]*this[0] + this[1]*this[1];
     }
 
-}
-
-
-
-
-export class Vector2dValue extends Vector2dBase implements Vector2d 
-{
-    clone() {
-        return new Vector2dValue(this[0],this[1]);
-    }
-
     sumv(b): Vector2d {
-        return new Vector2dValue(this[0]+b[0], this[1]+b[1]);
+        return new IndexedVector2d(this[0]+b[0], this[1]+b[1]);
     }
 
     addv(b) : Vector2d {
@@ -98,28 +157,63 @@ export class Vector2dValue extends Vector2dBase implements Vector2d
 
 
 
-
-export class Vector2dConstant extends Vector2dBase implements Vector2d 
+/**
+ * This is a Vector2d to use for constants. unfortunately
+ * javascript really doesn't support this kind of thing very well!
+ * We throw exceptions so that hopefully you can find the problems in your code.
+ */
+export class Vector2dConstant implements Vector2d
 {
-    clone() {
-        return new Vector2dConstant(this[0],this[1]);
+    private readonly xx: number;
+    private readonly yy: number;
+
+    // implement methods for Array here
+    public constructor(x, y) {
+        this.xx = x;
+        this.yy = y;
     }
 
-    sumv(b): Vector2d {
-        throw "called Add on constant!";
+    toString() : string {
+        return "[" + this.xx + "," + this.yy + "]";
     }
+
+    clone() {
+        return new Vector2dConstant(this.xx, this.yy);
+    }
+
+    get x() : number {
+        return this.xx;
+    }
+    set x(f : number) {
+        throw "called x= on constant!";
+    }
+
+    get y() : number {
+        return this.yy;
+    }
+    set y(f : number) {
+        throw "called y= on constant!";
+    }
+
+    Length() : number {
+        return Math.sqrt(this.xx*this.xx + this.yy*this.yy);
+    }
+    LengthSquared() : number {
+        return this.xx*this.xx + this.yy*this.yy;
+    }
+
 
     addv(b) : Vector2d {
-        throw "called AddTo on constant!";
+        throw "called addv on constant!";
     }
     subv(b) : Vector2d {    
-        throw "called AddTo on constant!";
+        throw "called subv on constant!";
     }
     mulf(f) : Vector2d {
-        throw "called AddTo on constant!";
+        throw "called mulf on constant!";
     }    
     divf(f) : Vector2d {
-        throw "called AddTo on constant!";
+        throw "called divf on constant!";
     }      
 }
 
