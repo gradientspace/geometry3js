@@ -1,0 +1,20 @@
+{
+  "name": "geometry3js",
+  "version": "1.0.0",
+  "description": "geometry library",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "lite-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lite-server": "^2.3.0",
+    "systemjs": "^0.20.11",
+    "typescript": "^2.2.2"
+  }
+}
