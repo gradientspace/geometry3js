@@ -1,12 +1,14 @@
 //import { Vector2dImpl, Vector2d } from "./VectorTypes/Vector2d";
 import * as g3 from "../src/g3";
 import Constants from "../src/util/Constants";
+import MathUtil from "../src/util/MathUtil";
 
 
 
 
 class Startup {
 	public static main(): number {
+
 
 		let v1 = g3.Vector2d(5,6);
 		let v2 = g3.Vector2d(2,3);

@@ -8,6 +8,14 @@ export default class Constants
     static readonly MaxInt = Number.MAX_SAFE_INTEGER;
     static readonly MinInt = Number.MIN_SAFE_INTEGER;
 
+    static readonly Deg2Rad = (Math.PI / 180.0);
+    static readonly Rad2Deg = (180.0 / Math.PI);
+    static readonly TwoPI = 2.0 * Math.PI;
+    static readonly HalfPI = 0.5 * Math.PI;
+    static readonly ZeroTolerance = 1e-08;
+    static readonly Epsilon = 2.2204460492503131e-016;
+
+
     static readonly Vector2d_Zero = new Vector2dConstant(0,0);
     static readonly Vector2d_One = new Vector2dConstant(1,1);
     static readonly Vector2d_AxisX = new Vector2dConstant(1,0); 
