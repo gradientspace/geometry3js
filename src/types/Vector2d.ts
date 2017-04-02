@@ -44,7 +44,7 @@ export interface Vector2d extends ICopyableVector2d
 /**
  * "Normal" implementation of Vector2d, has .x and .y properties
  */
-export class DefaultVector2d implements Vector2d
+export class g3Vector2d implements Vector2d
 {
     x: number;
     y: number;
@@ -60,7 +60,7 @@ export class DefaultVector2d implements Vector2d
     }
 
     clone() {
-        return new DefaultVector2d(this.x, this.y);
+        return new g3Vector2d(this.x, this.y);
     }
 
     Length() : number {
@@ -211,7 +211,7 @@ export class Vector2dConstant implements ICopyableVector2d
     }
 
     clone() {
-        return new DefaultVector2d(this.xx, this.yy);
+        return new g3Vector2d(this.xx, this.yy);
     }
 
     get x() : number {

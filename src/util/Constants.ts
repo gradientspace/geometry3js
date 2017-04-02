@@ -1,5 +1,6 @@
 
 import { Vector2dConstant } from "../types/Vector2d";
+import { AxisAlignedBox2d, g3AxisAlignedBox2d } from "../types/AxisAlignedBox2d";
 
 export default class Constants
 {
@@ -19,7 +20,12 @@ export default class Constants
     static readonly Vector2d_Zero = new Vector2dConstant(0,0);
     static readonly Vector2d_One = new Vector2dConstant(1,1);
     static readonly Vector2d_AxisX = new Vector2dConstant(1,0); 
-    static readonly Vector2d_AxisY = new Vector2dConstant(0,1);     
-    
+    static readonly Vector2d_AxisY = new Vector2dConstant(0,1);  
+    static readonly Vector2d_Max = new Vector2dConstant(Constants.MaxDouble, Constants.MaxDouble);
+    static readonly Vector2d_Min = new Vector2dConstant(Constants.MinDouble, Constants.MinDouble);
+
+    static get AxisAlignedBox2d_Empty(): AxisAlignedBox2d {
+        return new g3AxisAlignedBox2d();
+    }
          
 }

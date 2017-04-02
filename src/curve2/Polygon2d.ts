@@ -1,29 +1,35 @@
 import {IVector2d, Vector2d} from "../types/Vector2d";
 import MathUtil from "../util/MathUtil"
 import * as g3 from "../g3";
+import { AxisAlignedBox2d } from "../types/AxisAlignedBox2d";
+import Constants from "../util/Constants";
 
 
 export interface Polygon2d
 {
-    VertexCount() : number;
+    clone();
+
+    readonly VertexCount : number;
     GetVertex(index: number) : Vector2d;
     SetVertex(index: number, value: Vector2d);
-
-    Start() : Vector2d;
-    End() : Vector2d;
 
     AppendVertex(v : IVector2d);
     AppendArray(v: Array<number>);
 
+    readonly Start : Vector2d;
+    readonly End : Vector2d;
+    readonly Bounds: AxisAlignedBox2d;
+
+    readonly SignedArea : number;
+    readonly IsClockwise : boolean;
+    readonly Perimeter : number;
+
     Reverse();
-    SignedArea() : number;
-    IsClockwise() : boolean;
-    Perimeter() : number;
     ContainsPoint(vTest : IVector2d) : boolean;
 }
 
 
-export class DefaultPolygon2d implements Polygon2d
+export class g3Polygon2d implements Polygon2d
 {
     vertices: Vector2d[];
     Timestamp: number;
@@ -33,7 +39,14 @@ export class DefaultPolygon2d implements Polygon2d
         this.Timestamp = 0;
     }
 
-    VertexCount() : number {
+    clone() {
+        let p = new g3Polygon2d();
+        p.vertices = this.vertices.slice();
+        p.Timestamp = this.Timestamp;
+        return p;
+    }
+
+    get VertexCount() : number {
         return this.vertices.length;
     }
 
@@ -46,15 +59,28 @@ export class DefaultPolygon2d implements Polygon2d
         this.Timestamp++;
     }
 
-    Start() : Vector2d {
+    get Start() : Vector2d {
         return this.vertices[0].clone();
     }
-    End() : Vector2d {
+    get End() : Vector2d {
         return this.vertices[this.vertices.length - 1].clone();
     }
 
+    get Bounds(): AxisAlignedBox2d {
+        if (this.vertices.length == 0) {
+            return Constants.AxisAlignedBox2d_Empty;
+        }
+        let box = g3.AxisAlignedBox2d(this.vertices[0], this.vertices[0]);
+        for (let i = 1; i < this.vertices.length; ++i ) {
+            box.ContainPoint(this.vertices[i]);
+        }
+        return box;        
+    }
+
+
     AppendVertex(v : IVector2d) {
         this.vertices.push( g3.Vector2d(v.x, v.y) );
+        this.Timestamp++;
     }  
 
     AppendArray(v: Array<number>) {
@@ -65,6 +91,7 @@ export class DefaultPolygon2d implements Polygon2d
         for (let i = 0; i < N; ++i ) {
             this.vertices.push( g3.Vector2d(v[2*i], v[2*i+1] ) );
         }
+        this.Timestamp++;
     }
 
     Reverse() {
@@ -77,7 +104,7 @@ export class DefaultPolygon2d implements Polygon2d
     // GetBounds()
 
 
-    SignedArea() : number {
+    get SignedArea() : number {
         let fArea = 0;
         let N = this.vertices.length;
         for (let i = 0; i < N; ++i) {
@@ -88,12 +115,12 @@ export class DefaultPolygon2d implements Polygon2d
         }
         return fArea / 2;	        
     }
-    IsClockwise() : boolean {
-        return this.SignedArea() < 0;
+    get IsClockwise() : boolean {
+        return this.SignedArea < 0;
     }
 
 
-    Perimeter() : number {
+    get Perimeter() : number {
         let fPerim = 0;
         let N = this.vertices.length;
         for (let i = 0; i < N; ++i) {

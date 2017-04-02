@@ -37,14 +37,14 @@ class Startup {
 		let ptIn = g3.Vector2d(0.5, 0.5);
 		let ptOut = g3.Vector2d(2,2);
 
-		console.log("count ", poly.VertexCount(), 
-				   " area ", poly.SignedArea(),  " perimeter ", poly.Perimeter(),
+		console.log("count ", poly.VertexCount, 
+				   " area ", poly.SignedArea,  " perimeter ", poly.Perimeter,
 				   " ptIn ", poly.ContainsPoint(ptIn), " ptOut ", poly.ContainsPoint(ptOut) );
 
 		poly.Reverse();
 
-		console.log("reversed count ", poly.VertexCount(), 
-				   " area ", poly.SignedArea(),  " perimeter ", poly.Perimeter(),
+		console.log("reversed count ", poly.VertexCount, 
+				   " area ", poly.SignedArea,  " perimeter ", poly.Perimeter,
 				   " ptIn ", poly.ContainsPoint(ptIn), " ptOut ", poly.ContainsPoint(ptOut) );	
 	}
 
