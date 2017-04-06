@@ -12,7 +12,7 @@
             "isBuildCommand": true, 
             "isShellCommand": true, 
             "command": "tsc",
-            "args": ["-p", "./src", "-p", "./test"],
+            "args": ["-d", "true", "--declarationDir", "./decl",  "-p", "./src", "-p", "./test"],
             "problemMatcher": "$tsc"
         },
         {
@@ -22,6 +22,14 @@
             "isShellCommand": true, 
             "command": "./node_modules/.bin/webpack",
             "args": []
-        }       
+        },
+        {
+            "taskName": "webpack",
+            "suppressTaskName": false,
+            "isBuildCommand": false, 
+            "isShellCommand": true, 
+            "command": "./node_modules/.bin/webpack",
+            "args": []
+        }                   
     ]
 }

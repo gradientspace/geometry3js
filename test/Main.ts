@@ -1,3 +1,8 @@
+//declare function require(moduleName: string): any;
+//var System = require('systemjs');
+//declare const System: any;
+
+
 //import { Vector2dImpl, Vector2d } from "./VectorTypes/Vector2d";
 import * as g3 from "../src/g3";
 import Constants from "../src/util/Constants";

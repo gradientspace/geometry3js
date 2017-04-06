@@ -522,6 +522,8 @@ exports.default = MathUtil;
 Object.defineProperty(exports, "__esModule", { value: true });
 class g3GeneralPolygon2d {
     constructor() {
+        this.outer = null;
+        this.OuterIsClockwise = false;
         this.Holes = [];
     }
     get Outer() {

@@ -1,0 +1,29 @@
+<html>
+
+<script src="system.js" type="text/javascript"></script>
+<script src="g3.js" type="text/javascript"></script>
+
+<body>
+
+<script>
+
+
+SystemJS.import('types/Vector2d').then(function(m) 
+{
+    let v = new m.g3Vector2d(1,2);
+});
+
+
+SystemJS.import('g3').then(function(g3) 
+{
+    let v1 = g3.Vector2d(1,2);
+    let v2 = g3.Vector2d(3,4);
+    let v3 = v1.addv(v2);
+    console.log(v3.LengthSquared());
+});
+
+
+</script>
+
+</body>
+</html>

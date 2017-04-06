@@ -25,6 +25,8 @@ export class g3GeneralPolygon2d implements GeneralPolygon2d
     public OuterIsClockwise: boolean;
     
     constructor() {
+        this.outer = null;
+        this.OuterIsClockwise = false;
         this.Holes = [];
     }
 
