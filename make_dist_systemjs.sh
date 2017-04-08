@@ -7,6 +7,7 @@ cp tsconfig.json.webdist tsconfig.json
 tsc -m system -d -p ./
 rm tsconfig.json
 mv tsconfig.json.save tsconfig.json
+tsc -d -p ./
 popd
 
 mkdir dist/systemjs

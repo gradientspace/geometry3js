@@ -1,0 +1,11 @@
+import { Vector2d, ICopyableVector2d } from "./types/Vector2d";
+import { AxisAlignedBox2d } from "./types/AxisAlignedBox2d";
+import { Polygon2d } from "./curve2/Polygon2d";
+import { GeneralPolygon2d } from "./curve2/GeneralPolygon2d";
+export declare function Vector2d(x: number, y: number): Vector2d;
+export declare function Vector2dIndexable(x: number, y: number): Vector2d;
+export declare function AxisAlignedBox2d(min?: ICopyableVector2d, max?: ICopyableVector2d): AxisAlignedBox2d;
+export declare function Polygon2d(n?: number): Polygon2d;
+export declare function GeneralPolygon2d(): GeneralPolygon2d;
+export declare function addv2(a: Vector2d, b: Vector2d): Vector2d;
+export declare function addv(a: any, b: any): any;

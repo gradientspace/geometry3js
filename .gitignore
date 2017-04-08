@@ -45,3 +45,4 @@ jspm_packages
 .node_repl_history
 decl
 .DS_Store
+*.*~
