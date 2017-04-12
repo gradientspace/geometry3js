@@ -702,3 +702,4 @@ exports.g3Polygon2d = g3Polygon2d;
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=g3.webpack.js.map

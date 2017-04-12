@@ -10,5 +10,8 @@ module.exports = {
 
         libraryTarget: 'var',
         library: 'g3'        
-    }
+    },
+
+    // generate source map file (kind of useless though)
+    devtool: 'source-map' 
 };

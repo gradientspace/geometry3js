@@ -18,18 +18,9 @@
         {
             "taskName": "webpack",
             "suppressTaskName": false,
-            "isBuildCommand": false, 
             "isShellCommand": true, 
             "command": "./node_modules/.bin/webpack",
             "args": []
-        },
-        {
-            "taskName": "webpack",
-            "suppressTaskName": false,
-            "isBuildCommand": false, 
-            "isShellCommand": true, 
-            "command": "./node_modules/.bin/webpack",
-            "args": []
-        }                   
+        }                  
     ]
 }

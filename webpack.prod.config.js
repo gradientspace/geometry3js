@@ -6,12 +6,9 @@ module.exports = {
     },
     output: {
     	filename: '[name].webpack.js',
-    	path: path.resolve(__dirname, 'dist/webpack-dev'),
+    	path: path.resolve(__dirname, 'dist/webpack-prod'),
 
         libraryTarget: 'var',
         library: 'g3'        
-    },
-
-    // generate source map file (kind of useless though)
-    devtool: 'source-map' 
+    }
 };
